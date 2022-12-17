@@ -1,10 +1,10 @@
-package com.infybuzz.app;
+package com.riyan.microservicepractice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AddressServiceApplicationTests {
+class MicroservicePracticeApplicationTests {
 
 	@Test
 	void contextLoads() {
