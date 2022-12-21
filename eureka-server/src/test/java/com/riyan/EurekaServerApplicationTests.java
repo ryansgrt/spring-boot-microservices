@@ -1,10 +1,10 @@
-package com.riyan.microservicepractice;
+package com.riyan;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MicroservicePracticeApplicationTests {
+class EurekaServerApplicationTests {
 
 	@Test
 	void contextLoads() {
