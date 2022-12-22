@@ -11,7 +11,7 @@ import com.infybuzz.request.CreateStudentRequest;
 import com.infybuzz.response.AddressResponse;
 import com.infybuzz.response.StudentResponse;
 
-import reactor.core.publisher.Mono;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Service
 public class StudentService {
@@ -24,6 +24,9 @@ public class StudentService {
 	
 	@Autowired
 	AddressFeignClient addressFeignClient;
+	
+	@Autowired
+	CommonService commonService;
 
 	public StudentResponse createStudent(CreateStudentRequest createStudentRequest) {
 
@@ -39,7 +42,7 @@ public class StudentService {
 		
 		//studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
 		
-		studentResponse.setAddressResponse(addressFeignClient.getById(student.getAddressId()));
+		studentResponse.setAddressResponse(commonService.getAddressById(student.getAddressId()));
 
 		return studentResponse;
 	}
@@ -50,16 +53,20 @@ public class StudentService {
 		
 		//studentResponse.setAddressResponse(getAddressById(student.getAddressId()));
 		
-		studentResponse.setAddressResponse(addressFeignClient.getById(student.getAddressId()));
+		studentResponse.setAddressResponse(commonService.getAddressById(student.getAddressId()));
 		
 		return studentResponse;
 	}
 	
-	public AddressResponse getAddressById (long addressId) {
-		Mono<AddressResponse> addressResponse = 
-				webClient.get().uri("/getById/" + addressId)
-		.retrieve().bodyToMono(AddressResponse.class);
-		
-		return addressResponse.block();
-	}
+	/*
+	 * @CircuitBreaker(name = "addressService", fallbackMethod =
+	 * "fallbackGetAddressById") public AddressResponse getAddressById (long
+	 * addressId) { AddressResponse addressResponse =
+	 * addressFeignClient.getById(addressId);
+	 * 
+	 * return addressResponse; }
+	 * 
+	 * public AddressResponse fallbackGetAddressById (long addressId, Throwable th)
+	 * { return new AddressResponse(); }
+	 */
 }

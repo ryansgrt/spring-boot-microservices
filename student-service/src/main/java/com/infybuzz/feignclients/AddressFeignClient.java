@@ -9,7 +9,7 @@ import com.infybuzz.response.AddressResponse;
 @FeignClient(value = "api-gateway")
 public interface AddressFeignClient {
 
-    @GetMapping("address-service/api/address/getById/{id}")
-    public AddressResponse getById(@PathVariable long id);
-
+	@GetMapping("/address-service/api/address/getById/{id}")
+	public AddressResponse getById(@PathVariable long id);
+	
 }
